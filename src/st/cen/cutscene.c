@@ -2,6 +2,7 @@
 #include "cen.h"
 #include "../pfn_entity_update.h"
 #include <cutscene.h>
+#include "../cutscene_dialog.h"
 
 static u8 D_801805D8[] = {0, 64, 0, 0};
 static u8 D_801805DC[] = {0, 0, 0, 0};
@@ -267,68 +268,8 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
                     self->step = 5;
                     self->step_s = 0;
                     return;
-                case CSOP_CLOSE_DIALOG:
-                    if (g_SkipCutscene) {
-                        continue;
-                    }
-                    g_Dialogue.portraitAnimTimer = 0x18;
-                    self->step = 6;
-                    return;
-                case CSOP_PLAY_SOUND:
-                    if (g_SkipCutscene) {
-                        g_Dialogue.scriptCur++;
-                        g_Dialogue.scriptCur++;
-                        continue;
-                    }
-                    nextChar = *g_Dialogue.scriptCur++;
-                    nextChar <<= 4;
-                    nextChar |= *g_Dialogue.scriptCur++;
-                    g_api.PlaySfx(nextChar); // usually: music track ID
-                    continue;
-                case CSOP_WAIT_FOR_SOUND:
-                    if (g_SkipCutscene) {
-                        continue;
-                    }
-                    // "has music track started playing?"
-                    if (g_api.func_80131F68() != false) {
-                        // yes: playing, go to next step
-                        continue;
-                    }
-                    // no: music not playing yet, so repeat this step
-                    *g_Dialogue.scriptCur--;
-                    return;
-                case CSOP_SCRIPT_UNKNOWN_11:
-                    if (g_SkipCutscene) {
-                        continue;
-                    }
-                    // "has music track stopped playing?"
-                    if (g_api.func_80131F68() != true) {
-                        // yes: nothing is playing, go to next step
-                        continue;
-                    }
-                    // no: still waiting for playback to stop, repeat this step
-                    *g_Dialogue.scriptCur--;
-                    return;
-                case CSOP_SET_END:
-                    ptr = (u_long)*g_Dialogue.scriptCur++;
-                    ptr <<= 4;
-                    ptr |= (u_long)*g_Dialogue.scriptCur++;
-                    ptr <<= 4;
-                    ptr |= (u_long)*g_Dialogue.scriptCur++;
-                    ptr <<= 4;
-                    ptr |= (u_long)*g_Dialogue.scriptCur++;
-                    SetCutsceneEnd((u8*)ptr);
-                    continue;
-                case CSOP_SCRIPT_UNKNOWN_13:
-                    continue;
-                case CSOP_SCRIPT_UNKNOWN_14:
-                    ptr = (u_long)*g_Dialogue.scriptCur++;
-                    ptr <<= 4;
-                    ptr |= (u_long)*g_Dialogue.scriptCur++;
-                    ptr <<= 4;
-                    ptr |= (u_long)*g_Dialogue.scriptCur++;
-                    ptr <<= 4;
-                    ptr |= (u_long)*g_Dialogue.scriptCur++;
+
+#include "../cutscene_actions1.h"
 #ifdef VERSION_HD
                     g_Dialogue.scriptCur += *(u8*)(ptr + 0x100000) << 2;
 #else
