@@ -430,7 +430,7 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
                     self->step_s = 0;
                     return;
 
-#define CSA1_V_OVL_CUTSCENE_SCRIPT_PTR OVL_EXPORT(cutscene_data)
+#define CSA1_V_CUTSCENE_SCRIPT_PTR OVL_EXPORT(cutscene_data)
 #include "../cutscene_actions1.h"
 #ifdef VERSION_PSP
                     ptr += (u_long)OVL_EXPORT(cutscene_data);

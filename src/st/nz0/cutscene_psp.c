@@ -317,10 +317,12 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
                     self->step_s = 0;
                     return;
 
-#define CSA1_V_OVL_CUTSCENE_SCRIPT_PTR OVL_EXPORT(cutscene_text_offset)
+#define CSA1_V_CUTSCENE_SCRIPT_PTR OVL_EXPORT(cutscene_text_offset)
 #include "../cutscene_actions1.h"
+#ifdef VERSION_PSP
                     ptr += OVL_EXPORT(cutscene_text_offset);
                     g_Dialogue.scriptCur += *(u8*)ptr << 2;
+#endif
 
                     ptr = (u_long)*g_Dialogue.scriptCur++;
                     ptr <<= 4;

@@ -444,7 +444,7 @@ void OVL_EXPORT(EntityCutsceneDialogue)(Entity* self) {
                     return;
 
 // D_pspeu_09261388 should probably be an OVL_Export(xxx), once implemented
-#define CSA1_V_OVL_CUTSCENE_SCRIPT_PTR D_pspeu_09261388
+#define CSA1_V_CUTSCENE_SCRIPT_PTR D_pspeu_09261388
 #include "../cutscene_actions1.h"
 
 #ifdef VERSION_PSP
